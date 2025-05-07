@@ -1,12 +1,36 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/schedule/schedule"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#ffffff"
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "薰衣草之旅",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#7B68EE",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/schedule/schedule",
+        "text": "待办",
+        "iconPath": "images/icons8-inspection-96.png",
+        "selectedIconPath": "images/icons8-检查-100.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的",
+        "iconPath": "images/icons8-male-user-100.png",
+        "selectedIconPath": "images/icons8-用户-100 (1).png"
+      }
+    ]
   },
   "style": "v2",
   "componentFramework": "glass-easel",

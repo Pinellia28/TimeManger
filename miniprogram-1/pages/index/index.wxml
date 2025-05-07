@@ -1,27 +1,56 @@
 <!--index.wxml-->
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-        </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
+<view class="page-container">
+  <!-- 用户卡片 -->
+  <view class="user-card">
+    <view class="user-info">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"/>
+      <view class="user-details">
+        <text class="username">{{userInfo.nickName || '未登录'}}</text>
+        <text class="user-id" wx:if="{{userInfo.userId}}">ID: {{userInfo.userId}}</text>
+      </view>
     </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
+    <text class="welcome-text">欢迎使用待办事项管理小程序，让生活更有条理</text>
+  </view>
+
+  <!-- 功能区域 -->
+  <view class="action-section">
+    <text class="section-title">快捷功能</text>
+    <view class="action-list">
+      <view class="action-item" bindtap="navigateToSchedule">
+        <text class="action-icon">📝</text>
+        <text class="action-text">待办事项</text>
+      </view>
+      <view class="action-item" bindtap="navigateToGroups">
+        <text class="action-icon">📁</text>
+        <text class="action-text">分组管理</text>
+      </view>
+      <view class="action-item" bindtap="navigateToTags">
+        <text class="action-icon">🏷️</text>
+        <text class="action-text">标签管理</text>
+      </view>
+      <view class="action-item" bindtap="navigateToSettings">
+        <text class="action-icon">⚙️</text>
+        <text class="action-text">设置</text>
+      </view>
     </view>
   </view>
-</scroll-view>
+
+  <!-- 待办事项入口 -->
+  <view class="schedule-entry" bindtap="navigateToSchedule">
+    <view class="schedule-header">
+      <text class="schedule-title">最近待办</text>
+      <text class="schedule-count">共 {{scheduleCount}} 项</text>
+    </view>
+    <view class="schedule-list">
+      <view class="schedule-item" wx:for="{{recentSchedules}}" wx:key="id">
+        <text class="schedule-item-text">{{item.title}}</text>
+        <view class="schedule-item-priority priority-{{item.priority}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出登录按钮 -->
+  <view class="logout-btn" bindtap="handleLogout" wx:if="{{userInfo.userId}}">
+    <text>退出登录</text>
+  </view>
+</view>
