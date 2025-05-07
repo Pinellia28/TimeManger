@@ -1,0 +1,161 @@
+<view class="page-container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <text class="header-title">待办事项</text>
+    <view class="add-btn" bindtap="showAddModal">
+      <text class="iconfont icon-add">+</text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:elif="{{schedules.length === 0}}">
+    <text class="empty-state-icon">📝</text>
+    <text class="empty-state-text">暂无待办事项</text>
+  </view>
+
+  <!-- 待办事项列表 -->
+  <view class="schedule-list" wx:else>
+    <view 
+      class="schedule-card {{item.priority}}"
+      wx:for="{{schedules}}"
+      wx:key="id"
+    >
+      <view class="schedule-header">
+        <text class="schedule-title">{{item.title}}</text>
+        <view class="schedule-actions">
+          <view 
+            class="action-btn"
+            bindtap="showEditModal"
+            data-schedule="{{item}}"
+          >
+            <text class="iconfont icon-edit">✏️</text>
+          </view>
+          <view 
+            class="action-btn"
+            bindtap="deleteSchedule"
+            data-id="{{item.id}}"
+          >
+            <text class="iconfont icon-delete">🗑️</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="schedule-content">{{item.content}}</view>
+
+      <view class="schedule-footer">
+        <view class="schedule-meta">
+          <text>{{item.startTime}}</text>
+          <text wx:if="{{item.endTime}}">- {{item.endTime}}</text>
+        </view>
+        <view class="schedule-tags">
+          <text class="priority-tag priority-{{item.priority}}">
+            {{item.priority === 'high' ? '高优先级' : item.priority === 'medium' ? '中优先级' : '低优先级'}}
+          </text>
+          <text 
+            class="tag"
+            wx:for="{{item.tags.split(',')}}"
+            wx:key="*this"
+            wx:if="{{item}}"
+          >{{item}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加/编辑模态框 -->
+  <view class="modal" wx:if="{{showAddModal || showEditModal}}">
+    <view class="modal-content">
+      <view class="modal-form">
+        <view class="form-group">
+          <text class="form-label">标题</text>
+          <input 
+            class="form-input"
+            type="text"
+            placeholder="请输入标题"
+            value="{{formData.title}}"
+            bindinput="handleInput"
+            data-field="title"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">内容</text>
+          <textarea 
+            class="form-input"
+            placeholder="请输入内容"
+            value="{{formData.content}}"
+            bindinput="handleInput"
+            data-field="content"
+          />
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">开始时间</text>
+          <picker 
+            class="date-picker"
+            mode="date"
+            value="{{formData.startTime}}"
+            bindchange="handleInput"
+            data-field="startTime"
+          >
+            <view>{{formData.startTime || '请选择开始时间'}}</view>
+          </picker>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">结束时间</text>
+          <picker 
+            class="date-picker"
+            mode="date"
+            value="{{formData.endTime}}"
+            bindchange="handleInput"
+            data-field="endTime"
+          >
+            <view>{{formData.endTime || '请选择结束时间'}}</view>
+          </picker>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">优先级</text>
+          <picker 
+            class="picker"
+            mode="selector"
+            range="{{['高优先级', '中优先级', '低优先级']}}"
+            value="{{formData.priority === 'high' ? 0 : formData.priority === 'medium' ? 1 : 2}}"
+            bindchange="handlePriorityChange"
+          >
+            <view>{{formData.priority === 'high' ? '高优先级' : formData.priority === 'medium' ? '中优先级' : '低优先级'}}</view>
+          </picker>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">标签</text>
+          <input 
+            class="form-input"
+            type="text"
+            placeholder="请输入标签，用逗号分隔"
+            value="{{formData.tags}}"
+            bindinput="handleInput"
+            data-field="tags"
+          />
+        </view>
+
+        <view class="form-actions">
+          <button 
+            class="btn btn-secondary"
+            bindtap="{{showAddModal ? 'hideAddModal' : 'hideEditModal'}}"
+          >取消</button>
+          <button 
+            class="btn btn-primary"
+            bindtap="handleSubmit"
+          >保存</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

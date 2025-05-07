@@ -1,0 +1,277 @@
+/* 页面容器 */
+.page-container {
+  padding: var(--spacing-md);
+  background: var(--background-secondary);
+  min-height: 100vh;
+}
+
+/* 头部区域 */
+.header {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.add-btn {
+  background: var(--primary-color);
+  color: white;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 待办事项列表 */
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* 待办事项卡片 */
+.schedule-card {
+  background: var(--background-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.schedule-card:active {
+  transform: translateY(2rpx);
+  box-shadow: var(--shadow-md);
+}
+
+.schedule-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8rpx;
+  background: var(--primary-color);
+  border-radius: var(--radius-sm);
+}
+
+.schedule-card.high {
+  border-left-color: var(--danger-color);
+}
+
+.schedule-card.medium {
+  border-left-color: var(--warning-color);
+}
+
+.schedule-card.low {
+  border-left-color: var(--success-color);
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-sm);
+}
+
+.schedule-title {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.schedule-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.action-btn {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-secondary);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.action-btn:active {
+  background: var(--border-color);
+}
+
+.schedule-content {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+  line-height: var(--line-height-loose);
+}
+
+.schedule-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 2rpx solid var(--border-color);
+}
+
+.schedule-meta {
+  display: flex;
+  gap: var(--spacing-sm);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.schedule-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+/* 优先级标签 */
+.priority-tag {
+  padding: 4rpx 12rpx;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.priority-high {
+  background: rgba(244, 67, 54, 0.1);
+  color: var(--danger-color);
+}
+
+.priority-medium {
+  background: rgba(255, 152, 0, 0.1);
+  color: var(--warning-color);
+}
+
+.priority-low {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--success-color);
+}
+
+/* 模态框样式 */
+.modal-form {
+  padding: var(--spacing-lg);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 2rpx solid var(--border-color);
+  background: var(--background-primary);
+  font-size: var(--font-size-md);
+  transition: all var(--transition-fast);
+}
+
+.form-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4rpx rgba(123, 104, 238, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  color: var(--text-tertiary);
+}
+
+.empty-state-icon {
+  font-size: 120rpx;
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-color);
+  opacity: 0.5;
+}
+
+.empty-state-text {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* 日期选择器 */
+.date-picker {
+  background: var(--background-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  border: 2rpx solid var(--border-color);
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+}
+
+/* 下拉选择器 */
+.picker {
+  background: var(--background-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  border: 2rpx solid var(--border-color);
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.schedule-card {
+  animation: fadeIn 0.3s ease-out;
+} 

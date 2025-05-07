@@ -1,0 +1,37 @@
+<!-- pages/login/login.wxml -->
+<view class="container">
+  <view class="login-box">
+    <view class="title">登录</view>
+    <view class="form-group">
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="用户名" 
+        value="{{username}}"
+        data-field="username"
+        bindinput="handleInput"
+      />
+    </view>
+    <view class="form-group">
+      <input 
+        class="input" 
+        type="password" 
+        placeholder="密码" 
+        value="{{password}}"
+        data-field="password"
+        bindinput="handleInput"
+      />
+    </view>
+    <button 
+      class="login-btn" 
+      type="primary" 
+      loading="{{loading}}"
+      bindtap="loginSubmit"
+    >
+      登录
+    </button>
+    <view class="register-link">
+      <text bindtap="navigateToRegister">没有账号？立即注册</text>
+    </view>
+  </view>
+</view> 
