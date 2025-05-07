@@ -1,19 +1,42 @@
 // app.js
 App({
+  globalData: {
+    userInfo: null,
+    apiBaseUrl: 'http://localhost:8080/api'
+  },
+  
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    // Check if user is logged in
+    const userInfo = wx.getStorageSync('userInfo')
+    if (userInfo) {
+      this.globalData.userInfo = userInfo
+      
+      // Verify with server
+      this.checkSession()
+    }
+  },
+  
+  // Check if session is valid
+  checkSession() {
+    const that = this
+    wx.request({
+      url: this.globalData.apiBaseUrl + '/user/current',
+      method: 'GET',
+      success(res) {
+        if (res.data.code !== 200) {
+          // Session invalid, clear storage
+          that.clearUserInfo()
+        }
+      },
+      fail() {
+        // Network error, don't clear
       }
     })
   },
-  globalData: {
-    userInfo: null
+  
+  // Clear user info from storage
+  clearUserInfo() {
+    this.globalData.userInfo = null
+    wx.removeStorageSync('userInfo')
   }
 })
